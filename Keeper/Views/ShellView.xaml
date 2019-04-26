@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
         x:Name="Gr"
         AllowsTransparency="True"
-        mc:Ignorable="d" MinWidth="300" MaxWidth="300" MinHeight="400" Height="700" Width="300" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        mc:Ignorable="d" MinWidth="300" MaxWidth="370" MinHeight="400" Height="700" Width="350" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="20" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
@@ -141,9 +141,16 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" Margin="10" Background="Black">
-            <ListView Foreground="LightSteelBlue" ItemsSource="{Binding Path=MusicsItemSource}" Background="{x:Null}">
-                
+        <Grid Grid.Row="1" Margin="5" Background="Black">
+            <ListView x:Name="MusicList" cal:Message.Attach="[Event MouseDoubleClick]=[Action MusicPlay(MusicList.SelectedItem)]" Foreground="LightSteelBlue" ItemsSource="{Binding Path=MusicsItemSource}" Background="{x:Null}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn  Header="N" Width="25" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn  Header="Singer" Width="200" DisplayMemberBinding="{Binding SingerAndSong}"/>
+                        <GridViewColumn  Header="Duration" Width="50" DisplayMemberBinding="{Binding Duration}"/>
+                    </GridView>
+                </ListView.View>
+               
             </ListView>
         </Grid>
         
