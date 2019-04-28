@@ -19,6 +19,8 @@ using Keeper.MyHelpers;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Threading;
+using System.Windows.Input;
+using AudioSwitcher.AudioApi.CoreAudio;
 
 namespace Keeper.ViewModels
 {
@@ -104,10 +106,6 @@ namespace Keeper.ViewModels
 		}
 
 		#endregion
-
-		protected override void OnActivate()
-		{
-		}
 		public  void MusicTimer_Tick()
 		{
 			s--;
@@ -137,7 +135,7 @@ namespace Keeper.ViewModels
 
 		public void MusicDurationPlace(int userSetCurrentPosition)
 		{
-			Console.WriteLine(MaxTimeMusic);
+
 			CurrentMusicPosition = userSetCurrentPosition;
 			int temp = MaxTimeMusic - CurrentMusicPosition;
 			m = MathHelper.GetMinutes(temp);
@@ -155,6 +153,7 @@ namespace Keeper.ViewModels
 				Filter = "Music |*.mp3",
 				Multiselect = true,
 			};
+			SaveFileDialog savePhoto = new SaveFileDialog();
 
 			if (open.ShowDialog() == true)
 			{
@@ -168,10 +167,10 @@ namespace Keeper.ViewModels
 					musics.SongName = !string.IsNullOrWhiteSpace(tagFile.Tag.Title) ? tagFile.Tag.Title : Path.GetFileNameWithoutExtension(mus);
 					musics.URL = mus;
 					musics.TimeSpanDuration = tagFile.Properties.Duration;
-					//if(tagFile.Tag.Pictures.Length>=1)
+					//if (tagFile.Tag.Pictures.Length >= 1)
 					//{
 					//	var bin = tagFile.Tag.Pictures[0].Data.Data;
-					//	var a  = System.Drawing.Image.FromStream(new MemoryStream(bin)).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+					//	var a = System.Drawing.Image.FromStream(new MemoryStream(bin)).GetThumbnailImage(100, 100, null, IntPtr.Zero);
 					//}
 					tempTime = tagFile.Properties.Duration.Seconds >= 10 ? tagFile.Properties.Duration.Seconds.ToString() : "0" + tagFile.Properties.Duration.Seconds;
 					musics.Duration = tagFile.Properties.Duration.Minutes + ":" + tempTime;
@@ -195,6 +194,8 @@ namespace Keeper.ViewModels
 		}
 		public void PreviousSong()
 		{
+			if (MusicsItemSource.Count == 0)
+				return;
 			currentMusic--;
 			if (currentMusic == 0)
 			{
@@ -214,6 +215,8 @@ namespace Keeper.ViewModels
 		}
 		public void NextSong()
 		{
+			if (MusicsItemSource.Count == 0)
+				return;
 			currentMusic++;
 			if (currentMusic > MusicsItemSource.Count)
 			{
@@ -329,6 +332,26 @@ namespace Keeper.ViewModels
 				PackIcon[2] = PackIconKind.ShuffleDisabled;
 				isShuffled = false;
 			}
+		}
+		public void KeyPressed(KeyEventArgs e)
+		{
+			if(e.Key == Key.Space)
+			{
+				PauseButton();
+			}
+			if(e.Key ==Key.MediaNextTrack)
+			{
+				NextSong();
+			}
+			if (e.Key == Key.MediaPreviousTrack)
+			{
+				PreviousSong();
+			}
+			if (e.Key == Key.MediaPlayPause)
+			{
+				PauseButton();
+			}
+
 		}
 	}
 }

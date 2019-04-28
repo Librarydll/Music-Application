@@ -7,7 +7,8 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
         AllowsTransparency="True"
-        mc:Ignorable="d" MinWidth="300" MaxWidth="370" MinHeight="400" Height="700" Width="350" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        mc:Ignorable="d" MinWidth="300" MaxWidth="370" MinHeight="400" Height="700" Width="350" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        cal:Message.Attach="[Event PreviewKeyDown]=[Action KeyPressed($eventargs)]" >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="20" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
