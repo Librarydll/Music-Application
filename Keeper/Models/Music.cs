@@ -14,6 +14,7 @@ namespace Keeper.Models
 		public string Singer { get; set; }
 		public string SongName { get; set; }
 		public string Duration { get; set; }
+		public TimeSpan TimeSpanDuration { get; set; }
 		public string URL { get; set; }
 		public string SingerAndSong { get => $"{Singer } {SongName}"; }
 	}
